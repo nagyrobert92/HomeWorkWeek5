@@ -22,7 +22,9 @@ const Movie = sequelize.define(
 );
 Movie.sync();
 app.get("/movies", (req, res, next) => {
-  Movie.findAll()
+  const limit = req.query.limit || 20;
+  const offset = req.query.offset || 0;
+  Movie.findAll({ limit, offset })
     .then(movie => {
       res.json({ movie });
     })
